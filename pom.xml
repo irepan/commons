@@ -155,6 +155,13 @@
 
 			</plugins>
 		</pluginManagement>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>${wagon-ftp.version}</version>
+			</extension>
+		</extensions>
 	</build>
 	<properties>
 
@@ -169,6 +176,7 @@
 		<aspectjweaver.version>1.8.0</aspectjweaver.version>
 		<thymeleaf-spring4.version>2.1.2.RELEASE</thymeleaf-spring4.version>
 
+		<wagon-ftp.version>1.0-alpha-6</wagon-ftp.version>
 		<!-- web -->
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
 		<javaee-web-api.version>7.0</javaee-web-api.version>
@@ -224,4 +232,10 @@
 		<!-- <jrebel-maven-plugin.version>1.1.5</jrebel-maven-plugin.version> <cargo-maven2-plugin.version>1.4.8</cargo-maven2-plugin.version> -->
 
 	</properties>
+	<distributionManagement>
+		<repository>
+			<id>itappservices-ftp</id>
+			<url>ftp://ftp.itappservices.com/maven2</url>
+		</repository>
+	</distributionManagement>
 </project>

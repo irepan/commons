@@ -16,6 +16,13 @@
 
 package com.itappservices.web.servlet.view.tiles3;
 
+import java.io.InputStream;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.js.ajax.AjaxUrlBasedViewResolver;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
@@ -64,6 +71,12 @@ public class TilesAjaxUrlBasedViewResolver extends AjaxUrlBasedViewResolver {
 	 * @see #loadView(String, java.util.Locale)
 	 */
 	protected AbstractUrlBasedView buildView(String viewName) throws Exception {
+		String url = getPrefix() + viewName + getSuffix();
+		InputStream stream = getServletContext().getResourceAsStream(url);
+		if (stream == null) {
+			return new NonExistentView();
+		}
+
 		AbstractUrlBasedView view = super.buildView(viewName);
 		
 		// if DynamicTilesView, set tiles specific values
@@ -85,5 +98,22 @@ public class TilesAjaxUrlBasedViewResolver extends AjaxUrlBasedViewResolver {
 		
 		return view;
 	}
-	
+	private static class NonExistentView extends AbstractUrlBasedView {
+		@Override
+		protected boolean isUrlRequired() {
+			return false;
+		}
+
+		@Override
+		public boolean checkResource(Locale locale) throws Exception {
+			return false;
+		}
+
+		@Override
+		protected void renderMergedOutputModel(Map<String, Object> model,
+											   HttpServletRequest request,
+											   HttpServletResponse response) throws Exception {
+			// Purposely empty, it should never get called
+		}
+	}
 }

@@ -46,6 +46,11 @@ public class Server extends Thread {
     	}
     	
     }
+    
+    private void readTokens(Socket socket) throws Exception {
+    	
+    }
+    
     private void saveFile(Socket socket) throws Exception {
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
